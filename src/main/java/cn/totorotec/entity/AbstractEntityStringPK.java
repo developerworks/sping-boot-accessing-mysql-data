@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @MappedSuperclass
-public class AbstractEntityStringPK implements Serializable {
+public abstract class AbstractEntityStringPK implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
