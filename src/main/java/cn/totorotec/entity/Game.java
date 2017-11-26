@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Game extends AbstractEntityBase {
+public class Game extends AbstractEntityStringPK {
     @Column(length = 32)
     private String name;
 

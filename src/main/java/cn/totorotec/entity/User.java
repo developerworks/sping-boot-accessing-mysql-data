@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class User extends AbstractEntityBase {
+public class User extends AbstractEntityStringPK {
 
     @Length(min = 6, max = 12)
     private String name;

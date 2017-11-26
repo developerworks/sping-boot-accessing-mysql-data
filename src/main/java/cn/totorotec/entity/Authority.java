@@ -7,7 +7,7 @@ import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
-public class Authority extends AbstractEntityBase {
+public class Authority extends AbstractEntityStringPK {
 
     @Basic
     @Column(name = "authority_name", length = 100)
