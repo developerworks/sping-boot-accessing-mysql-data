@@ -16,7 +16,6 @@ public class Address extends AbstractEntity {
         this.province = province;
     }
 
-
     public String getCity() {
         return city;
     }
@@ -24,6 +23,5 @@ public class Address extends AbstractEntity {
     public void setCity(String city) {
         this.city = city;
     }
-
 
 }

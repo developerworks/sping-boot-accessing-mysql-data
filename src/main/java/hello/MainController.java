@@ -1,20 +1,24 @@
 package hello;
 
 import cn.totorotec.entity.User;
-import cn.totorotec.repository.AccountRepository;
-import cn.totorotec.repository.UserRepository;
+import cn.totorotec.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.io.*;
-import java.util.*;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.PropertyResourceBundle;
+import java.util.Set;
 
 @Controller
 //@RestController
@@ -26,6 +30,15 @@ public class MainController {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private GameRepository gameRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
 
     @GetMapping(path = "/add")
     @Transactional
@@ -58,7 +71,7 @@ public class MainController {
             PropertyResourceBundle bundle = new PropertyResourceBundle(new InputStreamReader(utf8in, "UTF-8"));
             for (ConstraintViolation<User> violation : violations) {
                 buf.append("-" + bundle.getString(violation.getPropertyPath().toString()));
-                buf.append(violation.getMessage()+"\n");
+                buf.append(violation.getMessage() + "\n");
             }
             System.out.println(buf);
             return "Save error.";

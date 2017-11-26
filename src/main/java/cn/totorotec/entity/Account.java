@@ -1,6 +1,5 @@
 package cn.totorotec.entity;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -15,7 +14,6 @@ public class Account extends AbstractEntity implements Serializable {
 
     @Column
     private String hash_password;
-
 
     public String getUsername() {
         return username;
@@ -32,6 +30,5 @@ public class Account extends AbstractEntity implements Serializable {
     public void setHash_password(String hash_password) {
         this.hash_password = hash_password;
     }
-
 
 }

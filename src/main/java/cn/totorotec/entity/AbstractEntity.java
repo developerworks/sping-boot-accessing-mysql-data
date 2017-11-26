@@ -30,10 +30,10 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private Integer created_at;
     private Integer is_deleted;
 
@@ -60,6 +60,5 @@ public abstract class AbstractEntity {
     public void setIs_deleted(Integer is_deleted) {
         this.is_deleted = is_deleted;
     }
-
 
 }
