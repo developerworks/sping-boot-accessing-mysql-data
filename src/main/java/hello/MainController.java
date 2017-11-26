@@ -1,5 +1,8 @@
 package hello;
 
+import cn.totorotec.entity.User;
+import cn.totorotec.repository.AccountRepository;
+import cn.totorotec.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,9 @@ public class MainController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @GetMapping(path = "/add")
     @Transactional
@@ -64,4 +70,5 @@ public class MainController {
     Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
+
 }
