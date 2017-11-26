@@ -42,8 +42,8 @@ public abstract class AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Integer created_at;
-    private Integer is_deleted;
+    private Integer createdAt;
+    private Integer isDeleted;
 
     public Long getId() {
         return id;
@@ -53,20 +53,20 @@ public abstract class AbstractEntity implements Serializable {
         this.id = id;
     }
 
-    public Integer getCreated_at() {
-        return created_at;
+    public Integer getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(Integer created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Integer createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Integer getIs_deleted() {
-        return is_deleted;
+    public Integer getIsDeleted() {
+        return isDeleted;
     }
 
-    public void setIs_deleted(Integer is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
 }

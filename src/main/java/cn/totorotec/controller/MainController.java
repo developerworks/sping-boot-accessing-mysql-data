@@ -1,4 +1,4 @@
-package hello;
+package cn.totorotec.controller;
 
 import cn.totorotec.entity.User;
 import cn.totorotec.repository.*;
