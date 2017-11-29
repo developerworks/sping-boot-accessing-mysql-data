@@ -70,7 +70,12 @@
         </dependency>
 
 
-
+        <!-- Encrypt / Decrypt -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
 
     </dependencies>
 
@@ -78,7 +83,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!--下面的属性仅能在JDK9中使用-->
+        <!--The following property can be used only in java 9 -->
         <!--<maven.compiler.release>9</maven.compiler.release>-->
     </properties>
 
