@@ -19,13 +19,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
-//    @Override
-//    Iterable<User> findAll(Sort sort) {
-//
-//    }
-//
-//    @Override
-//    Page<User> findAll(Pageable pageable) {
-//
-//    }
+    User findByUsername(String username);
 }

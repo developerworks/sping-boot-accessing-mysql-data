@@ -1,4 +1,4 @@
-package cn.totorotec.service;
+package cn.totorotec.service.db;
 
 import cn.totorotec.entity.User;
 
