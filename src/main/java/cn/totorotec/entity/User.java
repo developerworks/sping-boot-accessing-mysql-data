@@ -25,14 +25,13 @@ public class User extends AbstractEntity {
      * 角色
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
+    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
     /**
      * 职权
      */
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_authority", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    @JoinTable
+    @JoinTable(name = "user_authority", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "authority_id")})
     private Set<Authority> authorities;
 
 
