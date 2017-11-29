@@ -1,3 +1,8 @@
+/**
+ * 职权, 权限实体
+ **
+ * 可以把职权 Authority 当做是一个以字符串标识的 "Permission" 或 一个 "Right".
+ */
 package cn.totorotec.entity;
 
 import javax.persistence.Basic;
@@ -17,7 +22,9 @@ public class Authority extends AbstractEntityStringPK {
     @Column(name = "authority_description", length = 1024)
     private String authorityDescription;
 
-    //    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+    /**
+     * 哪些用户有这个权限, 通过User.authorities属性进行描述
+     */
     @ManyToMany(mappedBy = "authorities")
     private Set<User> users;
 
