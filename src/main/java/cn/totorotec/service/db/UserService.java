@@ -10,5 +10,5 @@ public interface UserService extends DatabaseService<User> {
 
     User findByUsername(String username);
 
-    User register(UserDto userDto) throws UserAlreadyExistException;
+    User createUser(UserDto userDto) throws UserAlreadyExistException;
 }

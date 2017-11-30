@@ -107,6 +107,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
         return privilege;
     }
+
     @Transactional
     protected Privilege createPrivilegeIfNotFound(String name, String description) {
 
@@ -133,7 +134,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Transactional
     protected Resource createResourceIfNotFound(String name, String url, String description) {
         Resource resource = resourceRepository.findByName(name);
-        if(resource == null) {
+        if (resource == null) {
             resource = new Resource(name, url, description);
             resourceRepository.save(resource);
         }
