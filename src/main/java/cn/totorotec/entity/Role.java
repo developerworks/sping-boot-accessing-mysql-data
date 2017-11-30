@@ -2,6 +2,7 @@ package cn.totorotec.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Role extends AbstractEntity {
@@ -9,25 +10,44 @@ public class Role extends AbstractEntity {
     private String description;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<User> users;
+    private Set<User> users;
 
     @ManyToMany
     @JoinTable(
-        name = "roles_privileges",
+        name = "role_privileges",
         joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
     )
-    private List<Privilege> privileges;
+    private Set<Privilege> privileges;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @JoinTable(
+        name = "role_resources",
+        joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "resource_id", referencedColumnName = "id")}
+    )
+    private Set<Resource> resources;
+
+    public Role() {
+
+    }
 
     public Role(String name) {
         super();
+        this.name = name;
     }
 
-    public List<Privilege> getPrivileges() {
+    public Role(String name, String description) {
+        super();
+        this.name = name;
+        this.description = description;
+    }
+
+    public Set<Privilege> getPrivileges() {
         return privileges;
     }
 
-    public void setPrivileges(List<Privilege> privileges) {
+    public void setPrivileges(Set<Privilege> privileges) {
         this.privileges = privileges;
     }
 
@@ -47,11 +67,11 @@ public class Role extends AbstractEntity {
         this.description = description;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

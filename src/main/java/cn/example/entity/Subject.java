@@ -1,4 +1,4 @@
-package cn.totorogame.abac;
+package cn.example.entity;
 
 /**
  * 请求访问的实体

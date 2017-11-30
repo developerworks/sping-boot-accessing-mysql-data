@@ -1,4 +1,4 @@
-package cn.totorogame.abac;
+package cn.example.entity;
 
 public class Environment {
 }

@@ -1,4 +1,4 @@
-package cn.totorotec.entity;
+package cn.example;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;

@@ -3,16 +3,22 @@
  */
 package cn.totorotec.entity;
 
-import org.springframework.web.bind.annotation.RequestMethod;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
 public class Resource extends AbstractEntity {
 
     /**
      * 资源名称
      */
     private String name;
-    private String title;
-
     /**
      * 资源地址
      */
@@ -24,7 +30,27 @@ public class Resource extends AbstractEntity {
     private String description;
 
     /**
-     * 是否禁用
+     * 一个资源对应哪些角色可以访问
      */
-    private boolean disabled;
+    @ManyToMany(mappedBy = "resources", fetch = FetchType.EAGER)
+    private List<Role> roles;
+
+    public Resource() {
+    }
+
+    public Resource(String name) {
+        this.name = name;
+    }
+
+    public Resource(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
+
+    public Resource(String name, String url, String description) {
+        this.name = name;
+        this.url = url;
+        this.description = description;
+    }
+
 }

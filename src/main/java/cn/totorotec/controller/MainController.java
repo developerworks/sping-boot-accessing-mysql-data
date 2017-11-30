@@ -29,16 +29,7 @@ public class MainController {
     private UserRepository userRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
     private AuthorityRepository authorityRepository;
-
-    @Autowired
-    private GameRepository gameRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @GetMapping(path = "/add")
     @Transactional
