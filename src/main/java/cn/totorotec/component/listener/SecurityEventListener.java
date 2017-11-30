@@ -2,7 +2,7 @@
  *
  */
 
-package cn.totorotec.listener;
+package cn.totorotec.component.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

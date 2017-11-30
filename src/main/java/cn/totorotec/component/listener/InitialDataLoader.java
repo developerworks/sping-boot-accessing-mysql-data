@@ -2,7 +2,7 @@
  * 整个应用开始运行时执行
  */
 
-package cn.totorotec.listener;
+package cn.totorotec.component.listener;
 
 import cn.totorotec.entity.Privilege;
 import cn.totorotec.entity.Resource;
