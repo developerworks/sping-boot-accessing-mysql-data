@@ -1,11 +1,17 @@
 package cn.totorotec.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@Getter
+@Setter
+@Entity
 public class Group extends AbstractEntity {
 
     private String name;

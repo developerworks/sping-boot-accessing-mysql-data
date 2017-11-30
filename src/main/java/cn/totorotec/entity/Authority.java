@@ -5,11 +5,16 @@
  */
 package cn.totorotec.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
+@Setter
+@Getter
 public class Authority extends AbstractEntity {
 
     /**
@@ -24,34 +29,10 @@ public class Authority extends AbstractEntity {
 
     /**
      * 哪些用户有这个权限, 通过User.authorities属性进行描述
-     *
+     * <p>
      * User.authorities
      */
     @ManyToMany(mappedBy = "authorities")
     private Set<User> users;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
 }

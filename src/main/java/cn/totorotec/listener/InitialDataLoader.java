@@ -5,9 +5,11 @@
 package cn.totorotec.listener;
 
 import cn.totorotec.entity.Privilege;
+import cn.totorotec.entity.Resource;
 import cn.totorotec.entity.Role;
 import cn.totorotec.entity.User;
 import cn.totorotec.repository.PrivilegeRepository;
+import cn.totorotec.repository.ResourceRepository;
 import cn.totorotec.repository.RoleRepository;
 import cn.totorotec.repository.UserRepository;
 import org.slf4j.Logger;
@@ -19,8 +21,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 @Component
 
@@ -39,6 +42,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private RoleRepository roleRepository;
 
     @Autowired
+    private ResourceRepository resourceRepository;
+
+    @Autowired
     private PrivilegeRepository privilegeRepository;
 
     @Override
@@ -49,22 +55,36 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
 
         // 权限定义(CRUD)
-        Privilege create = createPrivilegeIfNotFound("POST/CREATE");
-        Privilege read = createPrivilegeIfNotFound("GET/READ");
-        Privilege update = createPrivilegeIfNotFound("PUT/UPDATE");
-        Privilege delete = createPrivilegeIfNotFound("DELETE/DELETE");
+        Privilege create = createPrivilegeIfNotFound("POST/CREATE", "创建");
+        Privilege read = createPrivilegeIfNotFound("GET/READ", "读取");
+        Privilege update = createPrivilegeIfNotFound("PUT/UPDATE", "更新");
+        Privilege delete = createPrivilegeIfNotFound("DELETE/DELETE", "删除");
 
         /**
          * 权限集合构成角色, 管理员可以创建,读取,更新,删除
          * 普通用户只能读
          */
         logger.info("定义角色和权限");
-        List<Privilege> adminPrivileges = Arrays.asList(create, read, update, delete);
-        List<Privilege> userPrivileges = Arrays.asList(read);
+        Set<Privilege> adminPrivileges = new HashSet<>();
+        adminPrivileges.add(create);
+        adminPrivileges.add(read);
+        adminPrivileges.add(update);
+        adminPrivileges.add(delete);
+
+        Set<Privilege> userPrivileges = new HashSet<>();
+        userPrivileges.add(read);
 
         logger.info("创建角色");
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", userPrivileges);
+
+        logger.info("创建资源");
+
+        createResourceIfNotFound("User", "/users", "用户资源");
+        createResourceIfNotFound("Role", "/roles", "角色资源");
+        createResourceIfNotFound("Resource", "/resources", "资源列表");
+        createResourceIfNotFound("Privilege", "/privileges", "权限");
+        createResourceIfNotFound("Group", "/groups", "用户组");
 
         logger.info("创建有指定角色的用户");
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
@@ -89,9 +109,19 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         }
         return privilege;
     }
+    @Transactional
+    protected Privilege createPrivilegeIfNotFound(String name, String description) {
+
+        Privilege privilege = privilegeRepository.findByName(name);
+        if (privilege == null) {
+            privilege = new Privilege(name, description);
+            privilegeRepository.save(privilege);
+        }
+        return privilege;
+    }
 
     @Transactional
-    protected Role createRoleIfNotFound(String name, List<Privilege> privileges) {
+    protected Role createRoleIfNotFound(String name, Set<Privilege> privileges) {
 
         Role role = roleRepository.findByName(name);
         if (role == null) {
@@ -100,5 +130,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             roleRepository.save(role);
         }
         return role;
+    }
+
+    @Transactional
+    protected Resource createResourceIfNotFound(String name, String url, String description) {
+        Resource resource = resourceRepository.findByName(name);
+        if(resource == null) {
+            resource = new Resource(name, url, description);
+            resourceRepository.save(resource);
+        }
+        return resource;
     }
 }
