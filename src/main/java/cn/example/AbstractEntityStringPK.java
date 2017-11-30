@@ -1,6 +1,8 @@
 package cn.example;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @MappedSuperclass
+@Setter
+@Getter
 public abstract class AbstractEntityStringPK implements Serializable {
 
     @Id
@@ -31,38 +35,6 @@ public abstract class AbstractEntityStringPK implements Serializable {
     @Column(nullable = false, insertable = true, updatable = true)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp updatedAt;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Timestamp getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Timestamp deletedAt) {
-        this.deletedAt = deletedAt;
-    }
 
     /**
      * 持久化钩子: 当执行创建操作时, 在持久化到数据库之前, 更新实体对象的创建和修改时间
