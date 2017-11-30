@@ -14,7 +14,6 @@ import cn.totorotec.repository.RoleRepository;
 import cn.totorotec.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -35,16 +33,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
      */
     boolean alreadySetup = false;
 
-    @Autowired
+    @javax.annotation.Resource
     private UserRepository userRepository;
 
-    @Autowired
+    @javax.annotation.Resource
     private RoleRepository roleRepository;
 
-    @Autowired
+    @javax.annotation.Resource
     private ResourceRepository resourceRepository;
 
-    @Autowired
+    @javax.annotation.Resource
     private PrivilegeRepository privilegeRepository;
 
     @Override
