@@ -1,3 +1,6 @@
+/**
+ * 用户和组可以抽象为Actor(扮演者), User和Group可以扮演一个或多个特定的角色
+ */
 package cn.totorotec.entity;
 
 import lombok.Getter;
@@ -14,10 +17,8 @@ import java.util.Set;
 @Setter
 public class User extends AbstractEntity {
 
-    @Length(min = 6, max = 12)
     private String name;
 
-    @Email
     private String email;
 
     private String username;
@@ -36,20 +37,20 @@ public class User extends AbstractEntity {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private List<Role> roles;
+    private Set<Role> roles;
 
-    /**
-     * 职权
-     */
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authorities", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "authority_id")})
-    private Set<Authority> authorities;
-
-    /**
-     * 组
-     */
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_groups", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private Set<Group> groups;
+//    /**
+//     * 职权
+//     */
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_authorities", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "authority_id")})
+//    private Set<Authority> authorities;
+//
+//    /**
+//     * 组
+//     */
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_groups", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
+//    private Set<Group> groups;
 
 }

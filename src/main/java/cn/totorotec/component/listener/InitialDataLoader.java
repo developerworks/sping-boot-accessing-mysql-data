@@ -19,6 +19,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -90,7 +91,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         user.setPassword("test");
         user.setUsername("q31514266");
         user.setEmail("developerworks@163.com");
-        user.setRoles(Arrays.asList(adminRole));
+        Set<Role> roles = new HashSet<Role>(Arrays.asList(adminRole));
+//        roles.add(adminRole);
+        user.setRoles(roles);
         user.setEnabled(true);
         userRepository.save(user);
         alreadySetup = true;

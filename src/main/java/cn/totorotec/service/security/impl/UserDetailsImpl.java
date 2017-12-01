@@ -1,11 +1,14 @@
 package cn.totorotec.service.security.impl;
 
+import cn.totorotec.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service("userDetails")
 public class UserDetailsImpl implements UserDetails {
@@ -33,7 +36,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+        List<Role> roles = new ArrayList<Role>();
+        for (Role role : roles) {
+            auths.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return auths;
     }
 
     @Override

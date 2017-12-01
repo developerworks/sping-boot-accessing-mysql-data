@@ -25,14 +25,14 @@ public class Role extends AbstractEntity {
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
     )
     private Set<Privilege> privileges;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
-    @JoinTable(
-        name = "role_resources",
-        joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "resource_id", referencedColumnName = "id")}
-    )
-    private Set<Resource> resources;
+//
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+//    @JoinTable(
+//        name = "role_resources",
+//        joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+//        inverseJoinColumns = {@JoinColumn(name = "resource_id", referencedColumnName = "id")}
+//    )
+//    private Set<Resource> resources;
 
     public Role() {
 

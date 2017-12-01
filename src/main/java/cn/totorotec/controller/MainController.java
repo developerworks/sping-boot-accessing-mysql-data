@@ -28,9 +28,6 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private AuthorityRepository authorityRepository;
-
     @GetMapping(path = "/add")
     @Transactional
     public @ResponseBody

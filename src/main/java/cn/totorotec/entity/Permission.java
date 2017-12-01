@@ -10,4 +10,7 @@ import javax.persistence.Entity;
 @Getter
 public class Permission extends AbstractEntity {
     private String name;
+    private Integer permission_id;
+    private Integer object_id;
+    private Integer operation_id;
 }
