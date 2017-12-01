@@ -36,10 +36,10 @@ public interface Review {
      * 返回赋予一个特定角色的权限集合
      *
      * @param operation
-     * @param object
+     * @param resource
      * @return
      */
-    Set<Permission> rolePermissions(Operation operation, Object object);
+    Set<Permission> rolePermissions(Operation operation, Resource resource);
 
     /**
      * Returns the permissions a given user gets through his/her assigned roles
@@ -77,10 +77,10 @@ public interface Review {
      * 返回给定角色在给定对象上允许的操作集合, 表示一个角色在一个对象上运行执行哪些操作
      *
      * @param role
-     * @param object
+     * @param resource
      * @return
      */
-    Set<Operation> roleOperationsOnObject(Role role, Object object);
+    Set<Operation> roleOperationsOnObject(Role role, Resource resource);
 
     /**
      * Returns the set of operations a given user is permitted to perform on a given object,
@@ -89,8 +89,8 @@ public interface Review {
      * 返回用户在对象上允许执行的操作集合, 直接的获取, (或者)通过分配的角色获取.
      *
      * @param user
-     * @param object
+     * @param resource
      * @return
      */
-    Set<Operation> userOperationsOnObject(User user, Object object);
+    Set<Operation> userOperationsOnObject(User user, Resource resource);
 }

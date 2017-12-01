@@ -1,9 +1,6 @@
 package cn.totorotec.service.security;
 
-import cn.totorotec.entity.Operation;
-import cn.totorotec.entity.Role;
-import cn.totorotec.entity.Session;
-import cn.totorotec.entity.User;
+import cn.totorotec.entity.*;
 
 public interface SupportingSystem {
 
@@ -41,8 +38,8 @@ public interface SupportingSystem {
      *
      * @param session
      * @param operation
-     * @param object
+     * @param resource
      * @return
      */
-    Boolean checkAccess(Session session, Operation operation, Object object);
+    Boolean checkAccess(Session session, Operation operation, Resource resource);
 }

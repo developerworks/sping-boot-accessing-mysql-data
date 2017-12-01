@@ -6,18 +6,17 @@ import cn.totorotec.entity.User;
 import cn.totorotec.service.db.RoleService;
 import cn.totorotec.service.db.UserService;
 import cn.totorotec.service.security.AdministrativeCommands;
-
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class AdministrativeCommandsImpl implements AdministrativeCommands {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
-    @Resource
+    @Autowired
     private RoleService roleService;
 
-    @Override
+    @Autowired
     public void addUser(User user) {
 
     }
@@ -48,12 +47,12 @@ public class AdministrativeCommandsImpl implements AdministrativeCommands {
     }
 
     @Override
-    public void grantPermission(Object object, Operation operation, Role role) {
+    public void grantPermission(cn.totorotec.entity.Resource resource, Operation operation, Role role) {
 
     }
 
     @Override
-    public void revokePermission(Operation operation, Object object, Role role) {
+    public void revokePermission(Operation operation, cn.totorotec.entity.Resource resource, Role role) {
 
     }
 }

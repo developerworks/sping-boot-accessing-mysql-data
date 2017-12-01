@@ -1,6 +1,6 @@
 package cn.totorotec.service.security.impl;
 
-import cn.totorotec.entity.Privilege;
+import cn.totorotec.entity.Permission;
 import cn.totorotec.entity.Role;
 import cn.totorotec.repository.RoleRepository;
 import cn.totorotec.repository.UserRepository;
@@ -32,26 +32,26 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
 
-        return getGrantedAuthorities(getPrivileges(roles));
+        return getGrantedAuthorities(getPermissions(roles));
     }
 
-    private List<String> getPrivileges(Collection<Role> roles) {
+    private List<String> getPermissions(Collection<Role> roles) {
 
-        List<String> privileges = new ArrayList<String>();
-        List<Privilege> collection = new ArrayList<Privilege>();
+        List<String> Permissions = new ArrayList<String>();
+        List<Permission> collection = new ArrayList<Permission>();
         for (Role role : roles) {
-            collection.addAll(role.getPrivileges());
+            collection.addAll(role.getPermissions());
         }
-        for (Privilege item : collection) {
-            privileges.add(item.getName());
+        for (Permission item : collection) {
+            Permissions.add(item.getName());
         }
-        return privileges;
+        return Permissions;
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> Permissions) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String privilege : privileges) {
-            authorities.add(new SimpleGrantedAuthority(privilege));
+        for (String Permission : Permissions) {
+            authorities.add(new SimpleGrantedAuthority(Permission));
         }
         return authorities;
     }

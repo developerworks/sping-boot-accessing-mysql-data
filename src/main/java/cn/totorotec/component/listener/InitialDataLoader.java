@@ -4,22 +4,16 @@
 
 package cn.totorotec.component.listener;
 
-import cn.totorotec.entity.Privilege;
-import cn.totorotec.entity.Resource;
-import cn.totorotec.entity.Role;
-import cn.totorotec.entity.User;
-import cn.totorotec.repository.PrivilegeRepository;
-import cn.totorotec.repository.ResourceRepository;
-import cn.totorotec.repository.RoleRepository;
-import cn.totorotec.repository.UserRepository;
+import cn.totorotec.entity.*;
+import cn.totorotec.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,17 +28,20 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
      */
     boolean alreadySetup = false;
 
-    @javax.annotation.Resource
+    @Autowired
     private UserRepository userRepository;
 
-    @javax.annotation.Resource
+    @Autowired
     private RoleRepository roleRepository;
 
-    @javax.annotation.Resource
+    @Autowired
+    private OperationRepository operationRepository;
+
+    @Autowired
     private ResourceRepository resourceRepository;
 
-    @javax.annotation.Resource
-    private PrivilegeRepository privilegeRepository;
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -53,32 +50,38 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             return;
         }
 
-        // 权限定义(CRUD)
-        Privilege create = createPrivilegeIfNotFound("POST/CREATE", "创建");
-        Privilege read = createPrivilegeIfNotFound("GET/READ", "读取");
-        Privilege update = createPrivilegeIfNotFound("PUT/UPDATE", "更新");
-        Privilege delete = createPrivilegeIfNotFound("DELETE/DELETE", "删除");
+        logger.info("定义操作");
 
-        /**
-         * 权限集合构成角色, 管理员可以创建,读取,更新,删除
-         * 普通用户只能读
-         */
-        logger.info("定义角色和权限");
-        Set<Privilege> adminPrivileges = new HashSet<>();
-        adminPrivileges.add(create);
-        adminPrivileges.add(read);
-        adminPrivileges.add(update);
-        adminPrivileges.add(delete);
+        Operation op_create = createOperationIfNotFound("POST/CREATE", "创建");
+        Operation op_read = createOperationIfNotFound("GET/READ", "读取");
+        Operation op_update = createOperationIfNotFound("PUT/UPDATE", "更新");
+        Operation op_delete = createOperationIfNotFound("DELETE/DELETE", "删除");
+        Operation op_all = createOperationIfNotFound("ALL", "所有");
 
-        Set<Privilege> userPrivileges = new HashSet<>();
-        userPrivileges.add(read);
+        logger.info("定义权限");
+        Permission createUser = createPermissionIfNotFound("创建用户", 1, 1);
+        Permission readUser = createPermissionIfNotFound("读取用户", 1, 2);
+        Permission updateUser = createPermissionIfNotFound("修改用户", 1, 3);
+        Permission deleteUser = createPermissionIfNotFound("删除用户", 1, 4);
 
-        logger.info("创建角色");
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", userPrivileges);
+        logger.info("=== 定义角色 ===");
+
+        logger.info("管理员角色的权限");
+        Set<Permission> adminPermissions = new HashSet<Permission>();
+        adminPermissions.add(createUser);
+        adminPermissions.add(readUser);
+        adminPermissions.add(updateUser);
+        adminPermissions.add(deleteUser);
+
+        logger.info("用户角色的权限");
+        Set<Permission> userPermissions = new HashSet<Permission>();
+        userPermissions.add(readUser);
+
+        createRoleIfNotFound("ROLE_ADMIN", adminPermissions);
+//        createRoleIfNotFound("ROLE_DISTRIBUTOR", )
+        createRoleIfNotFound("ROLE_USER", userPermissions);
 
         logger.info("创建资源");
-
         createResourceIfNotFound("User", "/users", "用户资源");
         createResourceIfNotFound("Role", "/roles", "角色资源");
         createResourceIfNotFound("Resource", "/resources", "资源列表");
@@ -88,10 +91,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         logger.info("创建有指定角色的用户");
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         User user = new User();
-        user.setPassword("test");
+        user.setPassword("123456");
         user.setUsername("q31514266");
         user.setEmail("developerworks@163.com");
         Set<Role> roles = new HashSet<Role>(Arrays.asList(adminRole));
+//        Set<Role> roles = new HashSet<Role>();
 //        roles.add(adminRole);
         user.setRoles(roles);
         user.setEnabled(true);
@@ -101,34 +105,23 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     @Transactional
-    protected Privilege createPrivilegeIfNotFound(String name) {
+    protected Operation createOperationIfNotFound(String name, String description) {
 
-        Privilege privilege = privilegeRepository.findByName(name);
-        if (privilege == null) {
-            privilege = new Privilege(name);
-            privilegeRepository.save(privilege);
+        Operation operation = operationRepository.findByName(name);
+        if (operation == null) {
+            operation = new Operation(name, description);
+            operationRepository.save(operation);
         }
-        return privilege;
+        return operation;
     }
 
     @Transactional
-    protected Privilege createPrivilegeIfNotFound(String name, String description) {
-
-        Privilege privilege = privilegeRepository.findByName(name);
-        if (privilege == null) {
-            privilege = new Privilege(name, description);
-            privilegeRepository.save(privilege);
-        }
-        return privilege;
-    }
-
-    @Transactional
-    protected Role createRoleIfNotFound(String name, Set<Privilege> privileges) {
+    protected Role createRoleIfNotFound(String name, Set<Permission> permissions) {
 
         Role role = roleRepository.findByName(name);
         if (role == null) {
             role = new Role(name);
-            role.setPrivileges(privileges);
+            role.setPermissions(permissions);
             roleRepository.save(role);
         }
         return role;
@@ -142,5 +135,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
             resourceRepository.save(resource);
         }
         return resource;
+    }
+
+    @Transactional
+    protected Permission createPermissionIfNotFound(String name, Integer resourceId, Integer operationId) {
+        Permission permission = permissionRepository.findByResourceIdAndOperationId(resourceId, operationId);
+        if (permission == null) {
+            permission = new Permission(name, resourceId, operationId);
+            permissionRepository.save(permission);
+        }
+        return permission;
     }
 }

@@ -4,16 +4,16 @@ import cn.totorotec.entity.*;
 import cn.totorotec.service.db.RoleService;
 import cn.totorotec.service.db.UserService;
 import cn.totorotec.service.security.Review;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.Set;
 
 public class ReviewImpl implements Review {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
-    @Resource
+    @Autowired
     private RoleService roleService;
 
     @Override
@@ -27,7 +27,7 @@ public class ReviewImpl implements Review {
     }
 
     @Override
-    public Set<Permission> rolePermissions(Operation operation, Object object) {
+    public Set<Permission> rolePermissions(Operation operation, Resource resource) {
         return null;
     }
 
@@ -47,12 +47,12 @@ public class ReviewImpl implements Review {
     }
 
     @Override
-    public Set<Operation> roleOperationsOnObject(Role role, Object object) {
+    public Set<Operation> roleOperationsOnObject(Role role, Resource resource) {
         return null;
     }
 
     @Override
-    public Set<Operation> userOperationsOnObject(User user, Object object) {
+    public Set<Operation> userOperationsOnObject(User user, Resource resource) {
         return null;
     }
 }

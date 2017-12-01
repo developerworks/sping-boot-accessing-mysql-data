@@ -1,10 +1,12 @@
+/**
+ * 基于角色的访问控制, 角色是核心, 作为用户和权限的桥, 实现用户和权限的解耦.
+ */
 package cn.totorotec.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,24 +17,22 @@ public class Role extends AbstractEntity {
     private String name;
     private String description;
 
+    /**
+     * 角色可以被赋予多个用户
+     */
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
 
+    /**
+     * 一个角色包含多个权限
+     */
     @ManyToMany
     @JoinTable(
-        name = "role_privileges",
-        joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
+        name = "role_permissions",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
-    private Set<Privilege> privileges;
-//
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
-//    @JoinTable(
-//        name = "role_resources",
-//        joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
-//        inverseJoinColumns = {@JoinColumn(name = "resource_id", referencedColumnName = "id")}
-//    )
-//    private Set<Resource> resources;
+    private Set<Permission> permissions;
 
     public Role() {
 
@@ -48,7 +48,6 @@ public class Role extends AbstractEntity {
         this.name = name;
         this.description = description;
     }
-
 
     public void addUser(User user) {
         if (!this.users.contains(user)) {

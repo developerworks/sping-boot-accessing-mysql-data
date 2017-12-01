@@ -1,4 +1,4 @@
-package cn.totorotec.example;
+package cn.example;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

@@ -11,13 +11,8 @@
  */
 package cn.totorotec.repository;
 
-import cn.totorotec.entity.QUser;
 import cn.totorotec.entity.User;
-import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
-import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.stereotype.Repository;
 
 //import org.springframework.data.domain.Page;
@@ -25,7 +20,9 @@ import org.springframework.stereotype.Repository;
 //import org.springframework.data.domain.Sort;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User>, QuerydslBinderCustomizer<QUser> {
+//public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredicateExecutor<User>, QuerydslBinderCustomizer<QUser> {
+
+public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
@@ -33,17 +30,17 @@ public interface UserRepository extends JpaRepository<User, Long>, QueryDslPredi
 
     User findByUsernameContains(String username);
 
-
     /**
      * https://lufficc.com/blog/spring-boot-jpa-querydsl
      * http://blog.csdn.net/liuchuanhong1/article/details/70244261
      * http://hrps.me/2016/11/18/spring-data-jpa/
      * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#query-by-example
+     *
      * @param bindings
      * @param user
      */
-    @Override
-    default void customize(QuerydslBindings bindings, QUser user) {
-        bindings.bind(user.name).first(StringExpression::containsIgnoreCase);
-    }
+//    @Override
+//    default void customize(QuerydslBindings bindings, QUser user) {
+//        bindings.bind(user.name).first(StringExpression::containsIgnoreCase);
+//    }
 }

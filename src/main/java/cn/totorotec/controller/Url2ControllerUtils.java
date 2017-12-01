@@ -1,4 +1,4 @@
-package cn.example;
+package cn.totorotec.controller;
 
 import cn.totorotec.pojo.UrlMapping;
 import org.slf4j.Logger;
