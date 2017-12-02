@@ -1,6 +1,8 @@
 package cn.totorotec.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -8,19 +10,9 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Operation extends AbstractEntity {
     private String name;
     private String description;
-
-    public Operation() {
-    }
-
-    public Operation(String name) {
-        this.name = name;
-    }
-
-    public Operation(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 }

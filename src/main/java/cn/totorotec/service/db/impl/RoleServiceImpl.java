@@ -26,4 +26,9 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> assignedRoles(User user) {
         return null;
     }
+
+    @Override
+    public Role getById(Integer id) {
+        return null;
+    }
 }

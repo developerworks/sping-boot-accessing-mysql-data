@@ -7,7 +7,7 @@ import cn.totorotec.repository.RoleRepository;
 import cn.totorotec.repository.UserRepository;
 import cn.totorotec.service.db.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     /**
      * TODO::QUESTION
      */
-    @Resource
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Resource
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // TODO:: 加密服务
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) throws UserAlreadyExistException {
-        user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
@@ -58,5 +58,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    @Override
+    public User getById(Integer id) {
+        return null;
     }
 }

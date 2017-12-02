@@ -6,11 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CommonBeanConfig {
-
     @Bean
     public StrongPasswordEncryptor strongEncryptor() {
-        StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
-        return encryptor;
+        return new StrongPasswordEncryptor();
     }
-
 }

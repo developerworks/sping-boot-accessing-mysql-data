@@ -4,6 +4,7 @@
 
 package cn.totorotec.component.listener;
 
+import cn.example.HelloProperties;
 import cn.totorotec.entity.*;
 import cn.totorotec.repository.*;
 import org.slf4j.Logger;
@@ -43,8 +44,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private PermissionRepository permissionRepository;
 
+
+//    @Autowired
+//    private HelloProperties helloProperties;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+//        helloProperties.getMsg();
+
         if (alreadySetup) {
             logger.info("Data was loaded, don't repeat load data.");
             return;

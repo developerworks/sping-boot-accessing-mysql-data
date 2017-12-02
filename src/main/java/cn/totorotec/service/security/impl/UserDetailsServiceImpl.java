@@ -10,36 +10,40 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service("userDetailsService")
 @Getter
 @Setter
 
-public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserService userService;
+public class UserDetailsServiceImpl {
 
-    @Autowired
-    @Qualifier(value = "userToUserDetails")
-    private Converter<User, UserDetails> userUserDetailsConverter;
-
-    /**
-     * 获取用户信息
-     *
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
-     */
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User name " + username + " not found");
-        }
-        return userUserDetailsConverter.convert(user);
-    }
 }
+
+//public class UserDetailsServiceImpl implements UserDetailsService {
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    @Qualifier(value = "userToUserDetails")
+//    private Converter<User, UserDetails> userUserDetailsConverter;
+//
+//    /**
+//     * 获取用户信息
+//     *
+//     * @param username
+//     * @return
+//     * @throws UsernameNotFoundException
+//     */
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = userService.findByUsername(username);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User name " + username + " not found");
+//        }
+//        return userUserDetailsConverter.convert(user);
+//    }
+//}
